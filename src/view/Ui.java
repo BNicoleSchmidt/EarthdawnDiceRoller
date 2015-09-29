@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -29,6 +30,19 @@ public class Ui {
 			});
 			diceBox.getChildren().add(die);
 		}
+		CheckBox explode = new CheckBox("Explode?");
+		explode.setSelected(true);
+		explode.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+				if (explode.isSelected()) {
+					listener.explode();
+				} else {
+					listener.noExplode();
+				}
+			}
+		});
+		diceBox.getChildren().add(explode);
 		Button roll = new Button("Roll");
 		roll.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

@@ -25,6 +25,16 @@ public class Presenter implements IRollerListener {
 			public void dieClicked(int i) {
 				roller.addDie(i);
 			}
+
+			@Override
+			public void explode() {
+				roller.explode(true);
+			}
+
+			@Override
+			public void noExplode() {
+				roller.explode(false);
+			}
 		});
 	}
 
