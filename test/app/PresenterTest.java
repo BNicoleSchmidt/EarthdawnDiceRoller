@@ -32,6 +32,6 @@ public class PresenterTest {
 		verify(ui).setListener(viewListenerCaptor.capture());
 		IViewListener viewListener = viewListenerCaptor.getValue();
 		viewListener.rollClicked();
-		verify(roller).roll(6);
+		verify(roller).roll();
 	}
 }
