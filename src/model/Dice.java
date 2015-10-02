@@ -3,63 +3,53 @@ package model;
 import java.util.ArrayList;
 
 public class Dice {
-	private int d4 = 0;
-	private int d6 = 0;
-	private int d8 = 0;
-	private int d10 = 0;
-	private int d12 = 0;
-	private int d20 = 0;
+	private ArrayList<Die> dice;
 
 	public Dice() {
+		this.dice = new ArrayList<Die>();
 	}
 
 	public void addDie(int i) {
-		switch (i) {
-		case 4:
-			d4++;
-			break;
-		case 6:
-			d6++;
-			break;
-		case 8:
-			d8++;
-			break;
-		case 10:
-			d10++;
-			break;
-		case 12:
-			d12++;
-			break;
-		case 20:
-			d20++;
-			break;
-		}
+		Die die = new Die(i);
+		dice.add(die);
 	}
 
 	public String toString() {
-		return d4 + "d4 + " + d6 + "d6 + " + d8 + "d8 + " + d10 + "d10 + " + d12 + "d12 + " + d20 + "d20";
+		int[] list = { 0, 0, 0, 0, 0, 0 };
+
+		for (int i = 0; i < dice.size(); i++) {
+			switch (dice.get(i).getFace()) {
+			case 4:
+				list[0]++;
+				break;
+			case 6:
+				list[1]++;
+				break;
+			case 8:
+				list[2]++;
+				break;
+			case 10:
+				list[3]++;
+				break;
+			case 12:
+				list[4]++;
+				break;
+			case 20:
+				list[5]++;
+				break;
+			}
+		}
+		String str = list[0] + "d4 + " + list[1] + "d6 + " + list[2] + "d8 + " + list[3] + "d10 + " + list[4] + "d12 + "
+				+ list[5] + "d20";
+
+		return str;
 	}
 
-	public ArrayList<Integer> getDice() {
-		ArrayList<Integer> dice = new ArrayList<Integer>();
-		for (int i = 0; i < d4; i++) {
-			dice.add(4);
-		}
-		for (int i = 0; i < d6; i++) {
-			dice.add(6);
-		}
-		for (int i = 0; i < d8; i++) {
-			dice.add(8);
-		}
-		for (int i = 0; i < d10; i++) {
-			dice.add(10);
-		}
-		for (int i = 0; i < d12; i++) {
-			dice.add(12);
-		}
-		for (int i = 0; i < d20; i++) {
-			dice.add(20);
-		}
-		return dice;
+	public ArrayList<Die> getDice() {
+		return this.dice;
+	}
+
+	public void clear() {
+		this.dice = new ArrayList<Die>();
 	}
 }

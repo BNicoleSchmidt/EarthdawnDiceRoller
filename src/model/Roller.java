@@ -5,31 +5,44 @@ import java.util.ArrayList;
 public class Roller {
 
 	private IRollerListener listener;
-	private Dice dice = new Dice();
+	private Dice dice;
 	private boolean explode = true;
+	private Randomizer rand;
+
+	public Roller(Randomizer rand, Dice dice) {
+		this.rand = rand;
+		this.dice = dice;
+	}
 
 	public void roll() {
 		String result = "";
 		int total = 0;
-		ArrayList<Integer> toRoll = dice.getDice();
-		ArrayList<Integer> rolled = new ArrayList<Integer>();
-		for (int i : toRoll) {
-			int roll = (int) ((Math.random() * 100) % i) + 1;
-			rolled.add(roll);
-			while (roll == i && explode) {
-				roll = (int) ((Math.random() * 100) % i) + 1;
-				rolled.add(roll);
+		ArrayList<Die> toRoll = dice.getDice();
+		for (Die d : toRoll) {
+			int face = d.getFace();
+			int roll = rand.randInt(face);
+			while (roll == face && explode) {
+				d.rolledUp();
+				roll = rand.randInt(face);
 			}
+			d.setEnd(roll);
 		}
-		for (int i = 0; i < rolled.size(); i++) {
-			result += rolled.get(i) + " ";
-			total += rolled.get(i);
-			if (i < rolled.size() - 1) {
+		for (int i = 0; i < toRoll.size(); i++) {
+			Die currDie = toRoll.get(i);
+			int rollups = currDie.getRollUps();
+			while (rollups > 0) {
+				result += "(" + currDie.getFace() + ") + ";
+				total += currDie.getFace();
+				rollups--;
+			}
+			result += currDie.getEnd() + " ";
+			total += currDie.getEnd();
+			if (i < toRoll.size() - 1) {
 				result += "+ ";
 			}
 		}
 		result += "= " + total;
-		dice = new Dice();
+		dice.clear();
 		notifyListener(result);
 	}
 

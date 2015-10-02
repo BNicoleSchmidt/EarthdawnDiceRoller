@@ -34,4 +34,31 @@ public class PresenterTest {
 		viewListener.rollClicked();
 		verify(roller).roll();
 	}
+
+	@Test
+	public void testWhenDiceClickedDiceAreAdded() {
+		new Presenter(ui, roller);
+		verify(ui).setListener(viewListenerCaptor.capture());
+		IViewListener viewListener = viewListenerCaptor.getValue();
+		viewListener.dieClicked(4);
+		verify(roller).addDie(4);
+	}
+
+	@Test
+	public void testWhenExplodeSelectedExplodeIsSetTrue() {
+		new Presenter(ui, roller);
+		verify(ui).setListener(viewListenerCaptor.capture());
+		IViewListener viewListener = viewListenerCaptor.getValue();
+		viewListener.explode();
+		verify(roller).explode(true);
+	}
+
+	@Test
+	public void testWhenExplodeUnselectedExplodeIsSetFalse() {
+		new Presenter(ui, roller);
+		verify(ui).setListener(viewListenerCaptor.capture());
+		IViewListener viewListener = viewListenerCaptor.getValue();
+		viewListener.noExplode();
+		verify(roller).explode(false);
+	}
 }
